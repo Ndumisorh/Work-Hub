@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "Work Hub",
+  "short_name": "Work Hub",
+  "description": "An offline-ready workspace for managing clients, invoices, projects, and time.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#080f10",
+  "theme_color": "#0d1a17",
+  "icons": [
+    {
+      "src": "./work-hub-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
