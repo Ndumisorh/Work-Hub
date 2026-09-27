@@ -213,13 +213,13 @@ input {
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  height: 100%;
-  margin: 0 auto;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  margin: 0;
   min-height: 100svh;
   overflow: hidden;
-  border-inline: 1px solid rgba(255, 255, 255, 0.06);
+  border: 0;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -229,7 +229,11 @@ input {
 
 .app-shell {
   flex: 1;
+  width: 100%;
+  height: 100%;
   min-height: 0;
+  border: 0 !important;
+  border-radius: 0 !important;
   background:
     radial-gradient(ellipse at 84% 3%, rgba(52, 156, 125, 0.17), transparent 40%),
     radial-gradient(ellipse at 2% 94%, rgba(178, 133, 61, 0.075), transparent 35%),
@@ -989,47 +993,50 @@ body:has(.app-shell[data-theme="light"])::before {
 
 @media (max-width: 760px) {
   .app-shell {
-    min-height: 100vh !important;
+    min-height: 100svh !important;
     border-radius: 0 !important;
-    border-left: 0 !important;
-    border-right: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
   }
 
   .app-sidebar {
-    width: 64px !important;
-    flex-basis: 64px;
-    padding: 18px 8px !important;
+    position: absolute;
+    z-index: 50;
+    inset: 0 auto 0 0;
+    width: min(280px, 84vw) !important;
+    height: 100% !important;
+    flex-basis: auto;
+    padding: 18px 14px !important;
+    box-shadow: 18px 0 48px rgba(0, 0, 0, 0.42) !important;
   }
 
-  .app-sidebar > div:first-child {
-    justify-content: center;
-    padding: 4px 0 !important;
-  }
-
-  .app-sidebar > div:first-child > div:last-child,
-  .app-sidebar-section-label,
-  .app-sidebar > div:last-child > div:last-child,
-  .app-sidebar > button:last-child > div:last-child,
-  .app-nav-label,
-  .app-nav-badge {
-    display: none;
-  }
-
-  .app-nav-item {
-    justify-content: center;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  .app-sidebar > button:last-child {
-    justify-content: center;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+  .app-sidebar-backdrop {
+    position: absolute;
+    z-index: 40;
+    inset: 0;
+    display: block !important;
+    border: 0;
+    background: rgba(3, 9, 8, 0.58);
+    backdrop-filter: blur(2px);
   }
 
   .app-topbar {
-    padding: 12px 14px !important;
+    z-index: 30;
+    padding: 10px 12px !important;
     gap: 8px !important;
+  }
+
+  .global-search {
+    min-width: 0;
+    padding: 8px 9px !important;
+  }
+
+  .global-search input {
+    min-width: 0;
+  }
+
+  .app-content > div:last-child {
+    padding: 18px 14px !important;
   }
 
   .theme-cycle-button {
@@ -1041,13 +1048,8 @@ body:has(.app-shell[data-theme="light"])::before {
     display: none;
   }
 
-  .global-search-popover {
-    width: min(380px, calc(100vw - 112px));
-    max-width: calc(100vw - 96px);
-  }
-
-  .app-content > div:last-child {
-    padding: 18px 14px !important;
+  .dashboard-header > div:first-child > div:first-child {
+    font-size: clamp(19px, 6vw, 22px) !important;
   }
 
   .dashboard-header {
@@ -1092,5 +1094,91 @@ body:has(.app-shell[data-theme="light"])::before {
 
   .app-page {
     scrollbar-gutter: auto;
+  }
+}
+
+.app-sidebar-backdrop {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .dashboard-header > div:first-child > div:last-child {
+    line-height: 1.5;
+  }
+
+  .dashboard-stats > *,
+  .app-page .dashboard-stats > * {
+    padding: 16px !important;
+  }
+
+  .dashboard-panels > * {
+    padding: 18px !important;
+  }
+
+  .scheduled-project-row {
+    padding-block: 14px !important;
+  }
+
+  .client-table-scroll {
+    overflow: visible !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .client-table-heading {
+    display: none !important;
+  }
+
+  .client-data-row {
+    min-width: 0 !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    grid-template-areas:
+      "client actions"
+      "email email"
+      "project status";
+    gap: 10px 12px;
+    margin-bottom: 10px;
+    padding: 14px !important;
+    border: 1px solid rgba(172, 212, 195, 0.12) !important;
+    border-radius: 13px;
+    background: linear-gradient(145deg, rgba(24, 42, 41, 0.88), rgba(13, 27, 28, 0.94));
+  }
+
+  .client-data-row > :nth-child(1) { grid-area: client; min-width: 0; }
+  .client-data-row > :nth-child(2) {
+    grid-area: email;
+    min-width: 0;
+    font-size: 12px;
+  }
+  .client-data-row > :nth-child(2)::before {
+    content: "Email · ";
+    flex: 0 0 auto;
+    color: #91a197;
+  }
+  .client-data-row > :nth-child(3) {
+    grid-area: project;
+    min-width: 0;
+    font-size: 11.5px;
+  }
+  .client-data-row > :nth-child(3)::before {
+    content: "Project · ";
+    color: #91a197;
+  }
+  .client-data-row > :nth-child(4) { grid-area: status; justify-self: end; }
+  .client-data-row > :nth-child(5) { grid-area: actions; }
+
+  .invoice-data-row {
+    border-radius: 0 !important;
+  }
+
+  .app-page [style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+@media (min-width: 761px) {
+  .app-sidebar-backdrop {
+    display: none !important;
   }
 }

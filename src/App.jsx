@@ -70,7 +70,7 @@ function loadInvoices() {
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(() => window.matchMedia("(min-width: 761px)").matches);
   const [page, setPage] = useState("dashboard");
   const [theme, setTheme] = useState(() => {
     const savedTheme = loadStoredValue("work-hub-theme", "dark-green");
@@ -239,9 +239,9 @@ export default function App() {
     minHeight: "min(640px, 100svh)",
     display: "flex",
     flex: 1,
-    borderRadius: 16,
+    borderRadius: 0,
     overflow: "hidden",
-    border: "1px solid rgba(255,255,255,0.06)",
+    border: 0,
     position: "relative",
   };
 
@@ -249,7 +249,18 @@ export default function App() {
     <div className="app-shell" data-theme={theme} style={shell}>
       {showSplash && <SplashScreen onDone={dismissSplash} />}
 
-      {sidebarOpen && <Sidebar page={page} setPage={setPage} profile={profile} onEditProfile={() => setShowProfile(true)} />}
+      {sidebarOpen && <>
+        <button className="app-sidebar-backdrop" type="button" aria-label="Close navigation menu" onClick={() => setSidebarOpen(false)} />
+        <Sidebar
+          page={page}
+          setPage={setPage}
+          profile={profile}
+          onEditProfile={() => setShowProfile(true)}
+          onNavigate={() => {
+            if (window.matchMedia("(max-width: 760px)").matches) setSidebarOpen(false);
+          }}
+        />
+      </>}
 
       <div className="app-content" style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, minHeight: 0 }}>
         <Topbar search={search} setSearch={setSearch} setPage={setPage} clients={clients} invoices={invoices} theme={theme} onCycleTheme={cycleTheme} sidebarOpen={sidebarOpen} onToggleSidebar={() => setSidebarOpen((open) => !open)} />

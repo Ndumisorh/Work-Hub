@@ -22,7 +22,7 @@ export default function Clients({ clients, search, onAddClient, onEditClient, on
       <div style={{ fontSize: 13, color: "#8B9389", marginBottom: 18 }}>{filtered.length} client{filtered.length !== 1 ? "s" : ""} in your roster</div>
 
       <div className="client-table-scroll" style={{ background: colors.surface, border: `1px solid ${colors.border}`, borderRadius: 16, boxShadow: "0 8px 24px rgba(0,0,0,0.12)", overflowX: "auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1.8fr 1.6fr 1fr 80px", minWidth: 700, padding: "11px 18px", fontSize: 11.5, fontWeight: 600, color: "#91A197", letterSpacing: 0.3, borderBottom: `1px solid ${colors.divider}` }}>
+        <div className="client-table-heading" style={{ display: "grid", gridTemplateColumns: "1.6fr 1.8fr 1.6fr 1fr 80px", minWidth: 700, padding: "11px 18px", fontSize: 11.5, fontWeight: 600, color: "#91A197", letterSpacing: 0.3, borderBottom: `1px solid ${colors.divider}` }}>
           <div>CLIENT</div><div>EMAIL</div><div>PROJECT</div><div>STATUS</div><div style={{ textAlign: "right" }}>ACTIONS</div>
         </div>
         {filtered.length === 0 && (
@@ -31,7 +31,7 @@ export default function Clients({ clients, search, onAddClient, onEditClient, on
           </div>
         )}
         {filtered.map((c, i) => (
-          <div key={c.id} style={{ display: "grid", gridTemplateColumns: "1.6fr 1.8fr 1.6fr 1fr 80px", minWidth: 700, alignItems: "center", padding: "13px 18px", borderTop: i > 0 ? `1px solid ${colors.divider}` : "none", fontSize: 13 }}>
+          <div key={c.id} className="client-data-row" style={{ display: "grid", gridTemplateColumns: "1.6fr 1.8fr 1.6fr 1fr 80px", minWidth: 700, alignItems: "center", padding: "13px 18px", borderTop: i > 0 ? `1px solid ${colors.divider}` : "none", fontSize: 13 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
               <div style={{ width: 28, height: 28, borderRadius: "50%", background: c.color + "26", color: c.color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, flexShrink: 0 }}>{c.initials}</div>
               <span style={{ fontWeight: 500, color: "#EDEFEC" }}>{c.name}</span>

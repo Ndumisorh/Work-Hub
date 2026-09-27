@@ -50,6 +50,8 @@ export default function Topbar({ search, setSearch, setPage, clients, invoices, 
         onClick={onToggleSidebar}
         aria-label={sidebarOpen ? "Hide sidebar" : "Show sidebar"}
         title={sidebarOpen ? "Hide sidebar" : "Show sidebar"}
+        aria-expanded={sidebarOpen}
+        aria-controls="app-navigation"
         className="sidebar-toggle"
       >
         <Icon name="menu" size={17} />

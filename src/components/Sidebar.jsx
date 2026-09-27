@@ -1,11 +1,17 @@
 import NavItem from "./NavItem";
 import Icon from "./Icon";
 
-export default function Sidebar({ page, setPage, profile, onEditProfile }) {
+export default function Sidebar({ page, setPage, profile, onEditProfile, onNavigate }) {
+  function navigate(nextPage) {
+    setPage(nextPage);
+    onNavigate?.();
+  }
+
   const displayName = profile.name.trim();
   const initials = displayName ? displayName.split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase() : "";
   return (
     <div
+      id="app-navigation"
       className="app-sidebar"
       style={{
         width: 216,
@@ -48,14 +54,14 @@ export default function Sidebar({ page, setPage, profile, onEditProfile }) {
         WORKSPACE
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <NavItem icon="grid" label="Dashboard" active={page === "dashboard"} onClick={() => setPage("dashboard")} />
-        <NavItem icon="users" label="Clients" active={page === "clients"} onClick={() => setPage("clients")} />
-        <NavItem icon="file" label="Invoices" active={page === "invoices"} onClick={() => setPage("invoices")} />
-        <NavItem icon="clock" label="Time tracking" active={page === "time"} onClick={() => setPage("time")} />
+        <NavItem icon="grid" label="Dashboard" active={page === "dashboard"} onClick={() => navigate("dashboard")} />
+        <NavItem icon="users" label="Clients" active={page === "clients"} onClick={() => navigate("clients")} />
+        <NavItem icon="file" label="Invoices" active={page === "invoices"} onClick={() => navigate("invoices")} />
+        <NavItem icon="clock" label="Time tracking" active={page === "time"} onClick={() => navigate("time")} />
       </div>
 
       <div className="app-sidebar-section-label" style={{ fontSize: 10.5, fontWeight: 600, color: "#64748B", letterSpacing: 0.6, padding: "0 8px", marginTop: 24, marginBottom: 8 }}>SUPPORT</div>
-      <NavItem icon="help" label="Help and support" active={page === "about"} onClick={() => setPage("about")} />
+      <NavItem icon="help" label="Help and support" active={page === "about"} onClick={() => navigate("about")} />
 
       <button
         type="button"
