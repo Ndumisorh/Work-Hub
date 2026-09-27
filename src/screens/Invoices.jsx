@@ -229,7 +229,17 @@ export default function Invoices({ invoices, profile, search = "", currencyCode 
             <div className="invoice-issued-cell" data-label="Issued" style={{ color: "#A3B2AA", fontSize: 12 }}>{displayDate(invoice.issued)}</div>
             <div className="invoice-due-cell" data-label="Due" style={{ color: "#A3B2AA", fontSize: 12 }}>{displayDate(invoice.due)}</div>
             <div className="invoice-amount-cell" data-label="Amount" style={{ fontWeight: 600, color: invoice.status === "Paid" ? colors.positive : "#EDEFEC" }}>{currency(invoice.amount, currencyCode)}</div>
-            <div className="invoice-status-cell" data-label="Status"><Badge status={invoice.status} /></div>
+            <div className="invoice-status-cell" data-label="Status">
+              <button
+                type="button"
+                className={`invoice-status-toggle${invoice.status === "Paid" ? " is-paid" : " is-pending"}`}
+                aria-label={`${invoice.status === "Paid" ? "Mark invoice as pending" : "Mark invoice as paid"}: ${invoice.id}`}
+                aria-pressed={invoice.status === "Paid"}
+                onClick={() => onUpdateInvoice({ ...invoice, status: invoice.status === "Paid" ? "Pending" : "Paid" })}
+              >
+                <Badge status={invoice.status} />
+              </button>
+            </div>
             <div className="invoice-menu-cell" style={{ position: "relative", display: "flex", justifyContent: "flex-end" }}>
               <button aria-label={`Invoice menu ${invoice.id}`} aria-expanded={openMenuId === invoice.id} onClick={() => setOpenMenuId(openMenuId === invoice.id ? null : invoice.id)} className="invoice-menu-trigger">
                 <Icon name="more" size={17} />

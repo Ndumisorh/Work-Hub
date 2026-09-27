@@ -1,22 +1,20 @@
 import { useEffect, useState } from "react";
 
-// Shown once when the app first loads. Auto-advances after a short delay,
-// or immediately if the person taps/clicks anywhere.
+// Shown once when the app first loads, then fades away after five seconds.
 export default function SplashScreen({ onDone }) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const fadeTimer = setTimeout(() => setVisible(false), 1050);
-    const doneTimer = setTimeout(onDone, 1350);
+    const fadeTimer = setTimeout(() => setVisible(false), 4650);
+    const doneTimer = setTimeout(onDone, 5000);
     return () => { clearTimeout(fadeTimer); clearTimeout(doneTimer); };
   }, [onDone]);
 
   return (
     <div
       className="workhub-splash"
-      onClick={onDone}
       style={{
-        position: "absolute", inset: 0, borderRadius: 16, cursor: "pointer", overflow: "hidden",
+        position: "absolute", inset: 0, borderRadius: 16, overflow: "hidden",
         display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
         background: "radial-gradient(ellipse at 50% 43%, #0A1F1A 0%, #071812 48%, #051410 100%)",
         opacity: visible ? 1 : 0, transition: "opacity 0.28s ease",
@@ -49,18 +47,20 @@ export default function SplashScreen({ onDone }) {
           position: absolute; width: 360px; height: 300px; border-radius: 50%;
           background: radial-gradient(ellipse, rgba(29, 130, 91, 0.19), transparent 68%);
           filter: blur(12px); transform: translateY(-46px); pointer-events: none;
+          animation: splash-glow-pulse 3.6s ease-in-out infinite;
         }
         .splash-rays {
           position: absolute; inset: 0; opacity: 0.15; pointer-events: none;
           background: conic-gradient(from 222deg at 50% 43%, transparent 0deg, rgba(100, 190, 147, 0.08) 8deg, transparent 16deg, transparent 36deg, rgba(100, 190, 147, 0.06) 43deg, transparent 51deg, transparent 360deg);
           mask-image: radial-gradient(ellipse at center, black, transparent 70%);
+          transform-origin: center; animation: splash-rays-turn 32s linear infinite;
         }
         .splash-orbit {
           position: absolute; border: 1px solid rgba(115, 190, 153, 0.08); border-radius: 50%;
           transform: rotate(-25deg); pointer-events: none;
         }
-        .splash-orbit-one { width: 470px; height: 180px; }
-        .splash-orbit-two { width: 560px; height: 250px; transform: rotate(28deg); border-color: rgba(115, 190, 153, 0.045); }
+        .splash-orbit-one { width: 470px; height: 180px; animation: splash-orbit-drift 14s ease-in-out infinite alternate; }
+        .splash-orbit-two { width: 560px; height: 250px; transform: rotate(28deg); border-color: rgba(115, 190, 153, 0.045); animation: splash-orbit-drift 18s ease-in-out infinite alternate-reverse; }
         .splash-content { z-index: 1; display: flex; flex-direction: column; align-items: center; animation: splash-arrive 0.65s cubic-bezier(.2,.75,.25,1) both; }
         .splash-logo-wrap { position: relative; margin-bottom: 20px; }
         .splash-logo-wrap::before {
@@ -79,12 +79,15 @@ export default function SplashScreen({ onDone }) {
         .splash-name { color: #F0F8F3; font-size: 20px; font-weight: 650; letter-spacing: -0.45px; }
         .splash-tagline { margin-top: 7px; color: #9ABBA9; font-size: 12.5px; font-weight: 400; letter-spacing: 0.12px; }
         .splash-progress { width: 112px; height: 2px; margin-top: 29px; border-radius: 2px; overflow: hidden; background: rgba(160, 209, 181, 0.13); }
-        .splash-progress-fill { width: 100%; height: 100%; border-radius: inherit; transform-origin: left; background: linear-gradient(90deg, #2B9D71, #79E3B4); animation: splash-progress 1.2s cubic-bezier(.45,0,.55,1) both; box-shadow: 0 0 8px rgba(93, 225, 165, 0.6); }
+        .splash-progress-fill { width: 100%; height: 100%; border-radius: inherit; transform-origin: left; background: linear-gradient(90deg, #2B9D71, #79E3B4); animation: splash-progress 4.65s cubic-bezier(.2,.65,.25,1) both; box-shadow: 0 0 8px rgba(93, 225, 165, 0.6); }
         @keyframes splash-progress { from { transform: scaleX(0.06); opacity: 0.7; } to { transform: scaleX(1); opacity: 1; } }
         @keyframes splash-breathe { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
         @keyframes splash-arrive { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes splash-glow-pulse { 0%, 100% { opacity: 0.65; transform: translateY(-46px) scale(0.92); } 50% { opacity: 1; transform: translateY(-46px) scale(1.08); } }
+        @keyframes splash-rays-turn { to { rotate: 360deg; } }
+        @keyframes splash-orbit-drift { from { translate: -9px 3px; } to { translate: 9px -3px; } }
         @media (prefers-reduced-motion: reduce) {
-          .splash-content, .splash-logo, .splash-progress-fill { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+          .splash-content, .splash-logo, .splash-progress-fill, .splash-glow, .splash-rays, .splash-orbit { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
         }
       `}</style>
     </div>

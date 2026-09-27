@@ -119,6 +119,60 @@ input {
   background: rgba(255, 255, 255, 0.07);
 }
 
+.invoice-status-toggle {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 150ms ease, filter 150ms ease;
+}
+
+.invoice-status-toggle:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+.invoice-status-toggle:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.invoice-status-toggle:focus-visible {
+  outline: 2px solid #73e1bd;
+  outline-offset: 3px;
+}
+
+.invoice-status-toggle .status-badge {
+  transition: color 150ms ease, background 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.app-shell .app-page .invoice-status-toggle.is-paid .status-badge {
+  color: #72e3b5 !important;
+  border-color: rgba(82, 212, 157, 0.32) !important;
+  background: rgba(43, 157, 111, 0.17) !important;
+  box-shadow: inset 0 1px 0 rgba(179, 255, 220, 0.05);
+}
+
+.app-shell .app-page .invoice-status-toggle.is-paid .status-badge > span {
+  background: #61dba8 !important;
+  box-shadow: 0 0 7px rgba(97, 219, 168, 0.48) !important;
+}
+
+.app-shell .app-page .invoice-status-toggle.is-pending .status-badge {
+  color: #e1c783 !important;
+  border-color: rgba(216, 181, 111, 0.28) !important;
+  background: rgba(216, 181, 111, 0.1) !important;
+}
+
+.app-shell .app-page .invoice-status-toggle.is-pending .status-badge > span {
+  background: #d8b56f !important;
+  box-shadow: 0 0 7px rgba(216, 181, 111, 0.4) !important;
+}
+
 .secondary-action,
 .danger-action {
   min-height: 36px;
@@ -897,6 +951,62 @@ body:has(.app-shell[data-theme="light"])::before {
   min-height: 0;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(115, 224, 189, 0.52) rgba(8, 17, 18, 0.72);
+}
+
+.app-page::-webkit-scrollbar,
+.app-sidebar::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+.app-page::-webkit-scrollbar-track,
+.app-sidebar::-webkit-scrollbar-track {
+  border: 1px solid rgba(174, 210, 197, 0.08);
+  border-radius: 10px;
+  background: rgba(8, 17, 18, 0.72);
+}
+
+.app-page::-webkit-scrollbar-thumb,
+.app-sidebar::-webkit-scrollbar-thumb {
+  min-height: 34px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(115, 224, 189, 0.72), rgba(53, 155, 125, 0.78));
+  background-clip: padding-box;
+}
+
+.app-page::-webkit-scrollbar-thumb:hover,
+.app-sidebar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #8aebc9, #45b58e);
+  background-clip: padding-box;
+}
+
+.app-shell[data-theme="dark-neutral"] .app-page {
+  scrollbar-color: rgba(164, 190, 181, 0.52) rgba(16, 18, 21, 0.82);
+}
+
+.app-shell[data-theme="light"] .app-page {
+  scrollbar-color: rgba(54, 137, 105, 0.55) rgba(222, 233, 225, 0.85);
+}
+
+.app-shell[data-theme="light"] .app-page::-webkit-scrollbar-track,
+.app-shell[data-theme="light"] .app-sidebar::-webkit-scrollbar-track {
+  border-color: rgba(67, 101, 82, 0.11);
+  background: rgba(225, 235, 228, 0.82);
+}
+
+.app-shell[data-theme="light"] .app-page::-webkit-scrollbar-thumb,
+.app-shell[data-theme="light"] .app-sidebar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(69, 162, 126, 0.78), rgba(44, 126, 94, 0.82));
+  background-clip: padding-box;
+}
+
+.app-shell[data-theme="light"] .app-page::-webkit-scrollbar-thumb:hover,
+.app-shell[data-theme="light"] .app-sidebar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #56b88e, #368c68);
+  background-clip: padding-box;
 }
 
 @media (max-width: 900px) {
@@ -1149,6 +1259,13 @@ body:has(.app-shell[data-theme="light"])::before {
     overflow-wrap: anywhere;
   }
 
+  .app-shell[data-theme="light"] .client-empty-state {
+    color: #52665c !important;
+    border-color: rgba(67, 101, 82, 0.15) !important;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(239, 246, 241, 0.98)) !important;
+    box-shadow: 0 10px 25px rgba(36, 59, 46, 0.06), inset 0 1px 0 #fff;
+  }
+
   .client-data-row {
     min-width: 0 !important;
     grid-template-columns: minmax(0, 1fr) auto !important;
@@ -1162,6 +1279,28 @@ body:has(.app-shell[data-theme="light"])::before {
     border: 1px solid rgba(172, 212, 195, 0.12) !important;
     border-radius: 13px;
     background: linear-gradient(145deg, rgba(24, 42, 41, 0.88), rgba(13, 27, 28, 0.94));
+  }
+
+  .app-shell[data-theme="light"] .client-data-row {
+    border-color: rgba(67, 101, 82, 0.15) !important;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(239, 246, 241, 0.98)) !important;
+    box-shadow: 0 10px 25px rgba(36, 59, 46, 0.06), inset 0 1px 0 #fff;
+  }
+
+  .app-shell[data-theme="light"] .client-data-row > :nth-child(2)::before,
+  .app-shell[data-theme="light"] .client-data-row > :nth-child(3)::before {
+    color: #718279 !important;
+  }
+
+  .app-shell[data-theme="light"] .client-data-row .client-action-button {
+    color: #496458 !important;
+    border-color: rgba(67, 101, 82, 0.17) !important;
+    background: linear-gradient(145deg, #fff, #edf4ef) !important;
+    box-shadow: 0 3px 10px rgba(36, 59, 46, 0.06) !important;
+  }
+
+  .app-shell[data-theme="light"] .client-data-row .client-action-delete {
+    color: #a84f47 !important;
   }
 
   .client-data-row > :nth-child(1) { grid-area: client; min-width: 0; overflow: hidden; }
@@ -1199,17 +1338,17 @@ body:has(.app-shell[data-theme="light"])::before {
 
   .invoice-summary-stats {
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
     gap: 10px !important;
   }
 
   .invoice-summary-stats > * {
     min-width: 0;
-    padding: 15px !important;
-  }
-
-  .invoice-summary-stats > *:last-child {
-    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px !important;
   }
 
   .invoice-summary-stats > * > :first-child > span {
@@ -1219,13 +1358,55 @@ body:has(.app-shell[data-theme="light"])::before {
   }
 
   .invoice-summary-stats > * > :last-child:not(:first-child) {
-    font-size: clamp(24px, 8vw, 30px) !important;
+    min-width: 0;
+    margin: 0 !important;
+    font-size: clamp(20px, 6vw, 26px) !important;
+    text-align: right;
+    white-space: normal;
     overflow-wrap: anywhere;
   }
 
   .app-page [style*="grid-template-columns: 1fr 1fr"] {
     grid-template-columns: minmax(0, 1fr) !important;
   }
+}
+
+@media (max-width: 600px) {
+  .app-shell[data-theme="light"] .app-page .invoice-summary-stats > div[style*="border-radius: 16px"] {
+    border-color: rgba(67, 101, 82, 0.15) !important;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(239, 246, 241, 0.98)) !important;
+    box-shadow: 0 10px 25px rgba(36, 59, 46, 0.06), inset 0 1px 0 #fff !important;
+  }
+}
+
+.app-shell[data-theme="light"] .app-page .status-badge {
+  color: #365448 !important;
+  border-color: rgba(69, 103, 83, 0.18) !important;
+  background: #edf4ef !important;
+}
+
+.app-shell[data-theme="light"] .app-page .status-badge[data-status="Completed"],
+.app-shell[data-theme="light"] .app-page .status-badge[data-status="Paid"] {
+  color: #765c27 !important;
+  border-color: rgba(172, 135, 55, 0.2) !important;
+  background: #f7f1df !important;
+}
+
+.app-shell[data-theme="light"] .app-page .status-badge[data-status="On hold"] {
+  color: #8a4e32 !important;
+  border-color: rgba(170, 104, 64, 0.2) !important;
+  background: #fbefe7 !important;
+}
+
+.app-shell[data-theme="light"] .app-page .invoice-status-toggle.is-paid .status-badge {
+  color: #176f4b !important;
+  border-color: rgba(37, 149, 96, 0.27) !important;
+  background: #e5f5eb !important;
+}
+
+.app-shell[data-theme="light"] .app-page .invoice-status-toggle.is-paid .status-badge > span {
+  background: #259570 !important;
+  box-shadow: 0 0 7px rgba(37, 149, 112, 0.35) !important;
 }
 
 @media (min-width: 761px) {
