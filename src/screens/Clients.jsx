@@ -26,7 +26,7 @@ export default function Clients({ clients, search, onAddClient, onEditClient, on
           <div>CLIENT</div><div>EMAIL</div><div>PROJECT</div><div>STATUS</div><div style={{ textAlign: "right" }}>ACTIONS</div>
         </div>
         {filtered.length === 0 && (
-          <div style={{ minWidth: 700, padding: "32px 18px", textAlign: "center", color: "#6D746E", fontSize: 13 }}>
+          <div className="client-empty-state" style={{ minWidth: 700, padding: "32px 18px", textAlign: "center", color: "#6D746E", fontSize: 13 }}>
             {clients.length === 0 ? "No clients yet. Add your first client to get started." : "No clients match your search."}
           </div>
         )}

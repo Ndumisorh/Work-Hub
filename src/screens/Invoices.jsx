@@ -201,7 +201,7 @@ export default function Invoices({ invoices, profile, search = "", currencyCode 
       </div>
       <div style={{ fontSize: 13, color: "#8B9389", marginBottom: 18 }}>Manage billing across every active engagement.</div>
 
-      <div style={{ display: "flex", gap: 18, marginBottom: 22 }}>
+      <div className="invoice-summary-stats" style={{ display: "flex", gap: 18, marginBottom: 22 }}>
         <StatCard label="Total invoiced" value={currency(totalInvoiced, currencyCode)} icon="file" accent="#3FD6AA" />
         <StatCard label="Collected" value={currency(collected, currencyCode)} icon="check" accent={colors.positive} positive />
         <StatCard label="Outstanding" value={currency(outstanding, currencyCode)} icon="clock" accent="#A3B2AA" />
@@ -225,7 +225,7 @@ export default function Invoices({ invoices, profile, search = "", currencyCode 
           <div key={invoice.id} className={`invoice-data-row${selectionMode ? " is-selectable" : ""}`} style={{ display: "grid", gridTemplateColumns: gridColumns, alignItems: "center", padding: "12px 18px", borderTop: index ? `1px solid ${colors.divider}` : "none", fontSize: 13 }}>
             {selectionMode && <input className="invoice-select-cell" aria-label={`Select invoice ${invoice.id}`} type="checkbox" checked={selectedIds.includes(invoice.id)} onChange={() => toggleSelected(invoice.id)} />}
             <div className="invoice-id-cell" style={{ fontWeight: 600, color: "#EDEFEC" }}>{invoice.id}</div>
-            <div className="invoice-client-cell" style={{ color: "#D8DBD6", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{invoice.client}</div>
+            <div className="invoice-client-cell" data-label="Client" style={{ color: "#D8DBD6", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{invoice.client}</div>
             <div className="invoice-issued-cell" data-label="Issued" style={{ color: "#A3B2AA", fontSize: 12 }}>{displayDate(invoice.issued)}</div>
             <div className="invoice-due-cell" data-label="Due" style={{ color: "#A3B2AA", fontSize: 12 }}>{displayDate(invoice.due)}</div>
             <div className="invoice-amount-cell" data-label="Amount" style={{ fontWeight: 600, color: invoice.status === "Paid" ? colors.positive : "#EDEFEC" }}>{currency(invoice.amount, currencyCode)}</div>
